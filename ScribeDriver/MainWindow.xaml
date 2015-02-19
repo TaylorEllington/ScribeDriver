@@ -1,12 +1,39 @@
 ﻿<Window x:Class="ScribeDriver.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="169*"/>
-            <ColumnDefinition Width="4*"/>
-        </Grid.ColumnDefinitions>
+        Title="MainWindow" Height="350" Width="270">
 
-    </Grid>
+    <StackPanel Orientation="Vertical">
+        <GroupBox Header="Template Information">
+            <TextBox></TextBox>   
+        </GroupBox>
+        <Button> Configure </Button>
+        
+        <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition  Width="*"/>
+                <ColumnDefinition  Width="60"/>
+                <ColumnDefinition  Width="auto"/>
+                <ColumnDefinition  Width="60"/>
+                <ColumnDefinition  Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <!-- content for print status -->
+            
+            <TextBox VerticalAlignment="Center" Grid.Row="0" Grid.Column="1">80</TextBox>
+            
+            <TextBlock VerticalAlignment="Center" Grid.Row="0" Grid.Column="2">of </TextBlock>
+            
+            <TextBox VerticalAlignment="Center" Grid.Row="0" Grid.Column="3">80</TextBox>
+        </Grid>
+        
+        <TextBox> Starting value</TextBox>
+        <Button>Scribe</Button>
+        <Button>Lock </Button>
+        
+        
+    </StackPanel>
 </Window>
