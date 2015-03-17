@@ -9,7 +9,6 @@ namespace ScribeDriver
     class incrementalCounter
     {
         private int startValue;
-        private int dummyVal;
         private int currentValue;
         
         void seedCounter(int seed){
