@@ -23,6 +23,10 @@ namespace ScribeDriver
         public MainWindow()
         {
             InitializeComponent();
+
+            //motorManager test = new motorManager("COM4");
+
+
         }
     }
 }

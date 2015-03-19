@@ -12,22 +12,201 @@ namespace ScribeDriver
 
         scribingProcessManager() { }
         // public functions for ordering specific numbers
-        void drawZero() { }
-        void drawOne() { }
-        void drawTwo() { }
-        void drawThree() { }
-        void drawFour() { }
-        void drawFive() { }
-        void drawSix() { }
-        void drawSeven() { }
-        void drawEight() { }
-        void drawNine() { }
-        void drawA() { }
-        void drawB() { }
-        void drawC() { }
-        void drawD() { }
-        void drawE() { }
-        void drawF() { }
+        void drawZero() {
+            engage(1);
+            south(4);
+            east(2);
+            north(4);
+            west(2);
+            disengage(1);
+            nextDigit();
+        }
+
+        void drawOne() {
+            engage(1);
+            east(1);
+            south(4);
+            disengage(1);
+            west(1);
+            engage(1);
+            east(2);
+            disengage(1);
+            nextDigit();
+        }
+
+        void drawTwo() {
+            engage(1);
+            east(2);
+            south(2);
+            west(2);
+            south(2);
+            east(2);
+            disengage(1);
+            nextDigit();
+        }
+
+        void drawThree() {
+            engage(1);
+            east(2);
+            south(4);
+            west(2);
+            disengage(1);
+            north(2);
+            engage(1);
+            east(2);
+            disengage(1);
+            nextDigit();
+        }
+
+        void drawFour() {
+            engage(1);
+            south(2);
+            east(2);
+            disengage(1);
+            north(2);
+            engage(1);
+            south(4);
+            disengage(1);
+            nextDigit();
+        }
+
+        void drawFive() {
+            east(2);
+            engage(1);
+            west(2);
+            south(2);
+            east(2);
+            south(2);
+            west(2);
+            disengage(1);
+            nextDigit();
+        }
+
+        void drawSix() {
+            east(2);
+            engage(1);
+            west(2);
+            south(4);
+            east(2);
+            north(2);
+            west(2);
+            disengage(1);
+            nextDigit();
+        }
+
+        void drawSeven() {
+            engage(1);
+            east(2);
+            south(4);
+            disengage(1);
+            nextDigit();
+        }
+
+        void drawEight() {
+            engage(1);
+            south(4);
+            east(2);
+            north(2);
+            west(2);
+            disengage(2);
+            south(2);
+            engage(1);
+            east(2);
+            disengage(1);
+            nextDigit();
+        }
+
+        void drawNine() {
+            south(4);
+            east(2);
+            engage(1);
+            north(4);
+            west(2);
+            south(2);
+            east(2);
+            disengage(1);
+            nextDigit();
+        }
+
+        void drawA() {
+            south(4);
+            engage(1);
+            north(3);
+            northEast(1);
+            southEast(1);
+            south(3);
+            disengage(1);
+            north(2);
+            engage(1);
+            west(2);
+            disengage(1);
+            nextDigit();
+        }
+
+        void drawB() {
+            engage(1);
+            east(1);
+            southEast(1);
+            south(3);
+            west(2);
+            north(4);
+            disengage(1);
+            south(2);
+            engage(1);
+            east(2);
+            disengage(1);
+            nextDigit();
+        }
+
+        void drawC() {
+            east(2);
+            engage(1);
+            west(2);
+            south(4);
+            east(2);
+            disengage(1);
+            nextDigit();
+        }
+
+        void drawD() {
+            engage(1);
+            east(1);
+            southEast(1);
+            south(2);
+            southWest(1);
+            west(1);
+            north(4);
+            disengage(1);
+            nextDigit();
+        }
+
+        void drawE() {
+            east(2);
+            engage(1);
+            west(2);
+            south(4);
+            east(2);
+            disengage(1);
+            north(2);
+            engage(1);
+            west(2);
+            disengage(1);
+            nextDigit();
+        }
+
+        void drawF() {
+            east(2);
+            engage(1);
+            west(2);
+            south(4);
+            disengage(1);
+            north(2);
+            engage(1);
+            east(2);
+            disengage(1);
+            north(2);
+        
+        }
         
         //public control functions
         void stopRun() { }
