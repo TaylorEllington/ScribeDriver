@@ -3,14 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="375" Width="280">
 
-    <StackPanel Orientation="Vertical" >
-        <GroupBox Header="Template Information" Margin="0,0,0,5" >
-            <TextBox Text="profileName&#x0a;vCount&#x0a;hCount&#x0a;hBorder&#x0a;vBorder&#x0a;hSpacing&#x0a;vSpacing&#x0a;chipWidth&#x0a;chipHeight; ">
+    <StackPanel Orientation="Vertical"  >
+        <GroupBox Name="dataDisplay" Header="Template Information"  Margin="0,0,0,5" >
+            <TextBox Name="profileDisplay" Text="profileName&#x0a;vCount&#x0a;hCount&#x0a;hBorder&#x0a;vBorder&#x0a;hSpacing&#x0a;vSpacing&#x0a;chipWidth&#x0a;chipHeight; ">
             </TextBox>   
         </GroupBox>
-        <Button Margin="5,0,5,5" > Configure Template</Button>
+        <Button Margin="5,0,5,5" Name="templateButton" > Configure Template</Button>
         
-        <Grid >
+        <Grid Name="dataGrid">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition  Width="*"/>
                 <ColumnDefinition  Width="60"/>
@@ -31,11 +31,11 @@
             <TextBox VerticalAlignment="Center" Grid.Row="0" Grid.Column="3">80</TextBox>
         </Grid>
 
-        <TextBox Margin="0,5,0,5" > Starting value</TextBox>
+        <TextBox Margin="0,5,0,5" Name="startingValueInput" > Starting value</TextBox>
         <!--Primary fucntion buttons -->
-
-        <Button Height="60" FontSize="30" Margin="5,0,5,5" >Scribe</Button>
-        <Button Height="30" FontSize="20" Margin="5,0,5,5" >Lock </Button>
+        <TextBox Margin="5,70,5,5" Name="password" Visibility="Collapsed"></TextBox>
+        <Button Height="60" FontSize="30" Margin="5,0,5,5"  Name="scribeButton">Scribe</Button>
+        <Button Height="30" FontSize="20" Margin="5,0,5,5" Name="lockButton">Lock </Button>
         
         
     </StackPanel>
