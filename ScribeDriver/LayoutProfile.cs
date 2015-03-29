@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace ScribeDriver
 {
-    class LayoutProfile
+    class LayoutProfile 
     {
         public String profileName {get; set;}
         public int vCount { get; set; }
@@ -16,7 +18,32 @@ namespace ScribeDriver
         public double hSpacing { get; set; }
         public double vSpacing { get; set; }
         public double chipWidth { get; set; }
-        public double chipHeight { get; set; }
+        public double chipLength { get; set; }
+        public string dataString { get; set; }
+
+        void buildDataString(){
+
+            string data;
+            data = "Profile Name: " + profileName +"\n";
+            data += "vertical Chip Count: " + vCount +"\n";
+            data += "horizontal Chip Count: " + hCount +"\n";
+            data += "Vertical Edge Border: " + vBorder +"\n";
+            data += "Horizontal Edge Border: " + hBorder+"\n";
+            data += "Vertical Spacing: " + vSpacing +"\n";
+            data += "Horizontal Spacing: " + hSpacing +"\n";
+            data += "Package Width: " + chipWidth +"\n";
+            data += "Package Length: " + chipLength ;
+            dataString = data; 
+
+           
+
+            
+
+            }
+
+        
+
+       
 
 
         //for debuging only
@@ -30,7 +57,11 @@ namespace ScribeDriver
             hSpacing = .40;
             vSpacing = .40;
             chipWidth = .15;
-            chipHeight = .12;
+            chipLength = .12;
+            
+            buildDataString();
+
+
         }
     }
 }

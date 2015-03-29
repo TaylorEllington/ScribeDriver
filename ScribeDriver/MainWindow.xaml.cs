@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace ScribeDriver
 {
@@ -22,17 +23,22 @@ namespace ScribeDriver
     {
 
         bool locked;
+        LayoutProfile profile;
         public MainWindow()
         {
 
             InitializeComponent();
-            LayoutProfile profile = new LayoutProfile();
+            profile = new LayoutProfile();
             profile.defaultSettings();
+            Debug.WriteLine(profile.dataString);
+            profileDisplay.Text = profile.dataString;
+            
             locked = false;
 
             scribeButton.Click += scribeButton_Click;
             lockButton.Click += lockButton_Click;
 
+            
             
             
 
@@ -43,12 +49,15 @@ namespace ScribeDriver
 
         void scribeButton_Click(object sender, RoutedEventArgs args)
         {
-            profileDisplay.Text = "Scribing Button Clicked";
+            profile.defaultSettings();
+            
+
         }
 
         void lockButton_Click(object sender, RoutedEventArgs args)
         {
-            profileDisplay.Text = "lock Button Clicked";
+          
+            
             if (!locked)
             {
                 dataDisplay.Visibility = Visibility.Collapsed;

@@ -5,7 +5,7 @@
 
     <StackPanel Orientation="Vertical"  >
         <GroupBox Name="dataDisplay" Header="Template Information"  Margin="0,0,0,5" >
-            <TextBox Name="profileDisplay" Text="profileName&#x0a;vCount&#x0a;hCount&#x0a;hBorder&#x0a;vBorder&#x0a;hSpacing&#x0a;vSpacing&#x0a;chipWidth&#x0a;chipHeight; ">
+            <TextBox Name="profileDisplay" >
             </TextBox>   
         </GroupBox>
         <Button Margin="5,0,5,5" Name="templateButton" > Configure Template</Button>
@@ -24,6 +24,8 @@
             </Grid.RowDefinitions>
             <!-- content for print status -->
             
+            <TextBlock VerticalAlignment="Center" Grid.Row="0" Grid.Column="0">Printing:</TextBlock>
+            
             <TextBox VerticalAlignment="Center" Grid.Row="0" Grid.Column="1">80</TextBox>
             
             <TextBlock VerticalAlignment="Center" Grid.Row="0" Grid.Column="2">of </TextBlock>
@@ -33,7 +35,7 @@
 
         <TextBox Margin="0,5,0,5" Name="startingValueInput" > Starting value</TextBox>
         <!--Primary fucntion buttons -->
-        <TextBox Margin="5,70,5,5" Name="password" Visibility="Collapsed"></TextBox>
+        <PasswordBox Margin="5,70,5,5" Name="password" Visibility="Collapsed"></PasswordBox>
         <Button Height="60" FontSize="30" Margin="5,0,5,5"  Name="scribeButton">Scribe</Button>
         <Button Height="30" FontSize="20" Margin="5,0,5,5" Name="lockButton">Lock </Button>
         
