@@ -16,7 +16,7 @@
                 <ColumnDefinition  Width="60"/>
                 <ColumnDefinition  Width="auto"/>
                 <ColumnDefinition  Width="60"/>
-                <ColumnDefinition  Width="*"/>
+                <ColumnDefinition  Width="30"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -24,7 +24,7 @@
             </Grid.RowDefinitions>
             <!-- content for print status -->
             
-            <TextBlock VerticalAlignment="Center" Grid.Row="0" Grid.Column="0">Printing:</TextBlock>
+            <TextBlock VerticalAlignment="Center" Grid.Row="0" Grid.Column="0">Current Package:</TextBlock>
             
             <TextBox VerticalAlignment="Center" Grid.Row="0" Grid.Column="1">80</TextBox>
             
