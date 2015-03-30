@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
+using System.Diagnostics;
 
 namespace ScribeDriver
 {
     class scribingProcessManager
     {
         bool runFlag;
+        int ding;
 
-        scribingProcessManager() { }
+        public scribingProcessManager() {
+            ding = 10;
+        }
         // public functions for ordering specific numbers
         void drawZero() {
             engage(1);
@@ -209,8 +213,17 @@ namespace ScribeDriver
         }
         
         //public control functions
-        void stopRun() { }
-        void run() { }
+        public void stopRun() { }
+        public void run() {
+
+            for (int i = 0; i < 100; i++)
+            {
+                Debug.WriteLine(ding.ToString() );
+                ding++;
+                Thread.Sleep(1000);
+            }
+        }
+
         void nextDigit() { }
 
         //private scribe control functions - use only from inside draw functions
