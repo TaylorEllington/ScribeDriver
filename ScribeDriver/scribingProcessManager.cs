@@ -4,16 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Diagnostics;
+using System.Windows.Controls;
 
 namespace ScribeDriver
 {
     class scribingProcessManager
     {
-        bool runFlag;
-        int ding;
+
+        motorManager motor;
+        
 
         public scribingProcessManager() {
-            ding = 10;
+            motor = new motorManager("COM4");
+         
         }
         // public functions for ordering specific numbers
         void drawZero() {
@@ -213,14 +216,57 @@ namespace ScribeDriver
         }
         
         //public control functions
-        public void stopRun() { }
-        public void run() {
 
-            for (int i = 0; i < 100; i++)
-            {
-                Debug.WriteLine(ding.ToString() );
-                ding++;
-                Thread.Sleep(1000);
+        void scribe(char digit){
+
+            switch(digit){
+                case '0': drawZero();
+                    break;
+
+                case '1': drawOne();
+                    break;
+
+                case '2': drawTwo();
+                    break;
+
+                case '3': drawThree();
+                    break;
+
+                case '4': drawFour();
+                    break;
+
+                case '5': drawFive();
+                    break;
+
+                case '6': drawSix();
+                    break;
+
+                case '7': drawSeven();
+                    break;
+
+                case '8': drawEight();
+                    break;
+
+                case '9': drawNine();
+                    break;
+
+                case 'A': drawA();
+                    break;
+
+                case 'B': drawB();
+                    break;
+
+                case 'C': drawC();
+                    break;
+
+                case 'D': drawD();
+                    break;
+
+                case 'E': drawE();
+                    break;
+
+                case 'F': drawF();
+                    break;
             }
         }
 
@@ -239,15 +285,31 @@ namespace ScribeDriver
         //we use the compass analogy to avoid confusion with moving up (north) and
         //moving the scribe up (disengage)
 
-        private void north(int distance) { }
-        private void east(int distance) { }
-        private void south(int distance) { }
-        private void west(int distance) { }
+        private void north(int distance) {
+            motor.relLinearMove(0, (distance * .02));
+        }
+        private void east(int distance) {
+            motor.relLinearMove(-(distance * .02), 0);
+        }
+        private void south(int distance) {
+            motor.relLinearMove(0, -(distance * .02));
+        }
+        private void west(int distance) {
+            motor.relLinearMove((distance * .02), 0);
+        }
 
-        private void northEast(int distance) { }
-        private void southEast(int distance) { }
-        private void northWest(int distance) { }
-        private void southWest(int distance) { }
+        private void northEast(int distance) {
+            motor.relLinearMove(-(distance * .02), (distance * .02));
+        }
+        private void southEast(int distance) {
+            motor.relLinearMove(-(distance * .02), -(distance * .02));
+        }
+        private void northWest(int distance) {
+            motor.relLinearMove((distance * .02), (distance * .02));    
+        }
+        private void southWest(int distance) {
+            motor.relLinearMove((distance * .02), -(distance * .02));
+        }
 
         private void engage(int distance) { }
         private void disengage(int distance) { }

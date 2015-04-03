@@ -26,14 +26,24 @@
             
             <TextBlock VerticalAlignment="Center" Grid.Row="0" Grid.Column="0">Current Package:</TextBlock>
             
-            <TextBox VerticalAlignment="Center" Grid.Row="0" Grid.Column="1">80</TextBox>
+            <TextBox Name="CurrentTextBox" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1">1</TextBox>
             
             <TextBlock VerticalAlignment="Center" Grid.Row="0" Grid.Column="2">of </TextBlock>
             
-            <TextBox VerticalAlignment="Center" Grid.Row="0" Grid.Column="3">80</TextBox>
+            <TextBox Name="TotalTextBox" VerticalAlignment="Center" Grid.Row="0" Grid.Column="3"></TextBox>
         </Grid>
-
-        <TextBox Margin="0,5,0,5" Name="startingValueInput" > Starting value</TextBox>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" >Starting Value:</TextBlock>
+            <TextBox Grid.Row="0" Grid.Column="1" Margin="0,5,0,5" Name="startingValueInput" ></TextBox>
+        </Grid>
         <!--Primary fucntion buttons -->
         <PasswordBox Margin="5,70,5,5" Name="password" Visibility="Collapsed"></PasswordBox>
         <Button Height="60" FontSize="30" Margin="5,0,5,5"  Name="scribeButton">Scribe</Button>

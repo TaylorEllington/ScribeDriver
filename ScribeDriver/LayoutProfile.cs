@@ -50,14 +50,14 @@ namespace ScribeDriver
         public void defaultSettings()
         {
             profileName = "Default Profile";
-            vCount = 9;
-            hCount = 9;
+            vCount = 7;
+            hCount = 7;
             hBorder = 1;
-            vBorder = 1;
-            hSpacing = .40;
-            vSpacing = .40;
-            chipWidth = .15;
-            chipLength = .12;
+            vBorder = .383;
+            hSpacing = .332;
+            vSpacing = .387;
+            chipWidth = .216;
+            chipLength = .164;
             
             buildDataString();
 
