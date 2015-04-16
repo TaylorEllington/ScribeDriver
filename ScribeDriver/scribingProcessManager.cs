@@ -12,12 +12,26 @@ namespace ScribeDriver
     {
 
         motorManager motor;
+        double plunge;
         
 
         public scribingProcessManager() {
-            motor = new motorManager("COM4");
+            motor = new motorManager();
          
         }
+        public void setPlunge(double newPlunge){
+            plunge = newPlunge;
+        }
+
+        public void chipAndDigitSet(double X, double Y)
+        {
+            motor.linearMove(X, Y);
+        }
+        public void finish()
+        {
+            motor.done();
+        }
+
         // public functions for ordering specific numbers
         void drawZero() {
             engage(1);
@@ -113,7 +127,7 @@ namespace ScribeDriver
             engage(1);
             south(4);
             east(2);
-            north(2);
+            north(4);
             west(2);
             disengage(2);
             south(2);
@@ -217,7 +231,7 @@ namespace ScribeDriver
         
         //public control functions
 
-        void scribe(char digit){
+        public void scribe(char digit){
 
             switch(digit){
                 case '0': drawZero();
@@ -286,20 +300,20 @@ namespace ScribeDriver
         //moving the scribe up (disengage)
 
         private void north(int distance) {
-            motor.relLinearMove(0, (distance * .02));
+            motor.relLinearMove((distance * .02), 0 );
         }
         private void east(int distance) {
-            motor.relLinearMove(-(distance * .02), 0);
-        }
-        private void south(int distance) {
             motor.relLinearMove(0, -(distance * .02));
         }
+        private void south(int distance) {
+            motor.relLinearMove( -(distance * .02), 0);
+        }
         private void west(int distance) {
-            motor.relLinearMove((distance * .02), 0);
+            motor.relLinearMove(0, (distance * .02));
         }
 
         private void northEast(int distance) {
-            motor.relLinearMove(-(distance * .02), (distance * .02));
+            motor.relLinearMove( (distance * .02), -(distance * .02));
         }
         private void southEast(int distance) {
             motor.relLinearMove(-(distance * .02), -(distance * .02));
@@ -308,11 +322,18 @@ namespace ScribeDriver
             motor.relLinearMove((distance * .02), (distance * .02));    
         }
         private void southWest(int distance) {
-            motor.relLinearMove((distance * .02), -(distance * .02));
+            motor.relLinearMove( -(distance * .02),(distance * .02));
         }
 
-        private void engage(int distance) { }
-        private void disengage(int distance) { }
+        private void engage(int distance) {
+            motor.scribeIn(plunge);
+
+        }
+        private void disengage(int distance) {
+            motor.scribeOut();
+        }
+
+        
 
     }
 }

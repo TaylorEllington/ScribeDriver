@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.IO.Ports;
+using System.Management;
 namespace ScribeDriver
 {
     class motorManager
@@ -16,11 +17,22 @@ namespace ScribeDriver
         double Xpos;
         double Ypos;
 
-        public motorManager(string name)
+        public motorManager()
         {
+            if( findZaberConnection() == null){
+              System.Environment.Exit(999); 
+            }
+
+
+            string[] ports = SerialPort.GetPortNames();
+            string portname = findZaberConnection();
+
+            SerialPort serialPort = new SerialPort();
+            
+
             //setup connection to zaber devices
             motorSerialPort = new SerialPort();
-            motorSerialPort.PortName = name;
+            motorSerialPort.PortName = portname;
             motorSerialPort.BaudRate = 115200;
             motorSerialPort.Open();
 
@@ -35,8 +47,8 @@ namespace ScribeDriver
 
             Thread.Sleep(1000);
 
-            int x =  272002 ;
-            int y =  277122;
+            int x =  inchesToMicroSteps(2.74224);
+            int y = inchesToMicroSteps(2.44789);
             
            
 
@@ -44,7 +56,7 @@ namespace ScribeDriver
             motorSerialPort.WriteLine("/home");
             Thread.Sleep(4000);
             motorSerialPort.WriteLine("/01 stream 1 setup live 2 1");
-            motorSerialPort.WriteLine("/01 stream 1 line abs " + y+ " "+ x);
+            motorSerialPort.WriteLine("/01 stream 1 line abs " + x+ " "+ y);
             Thread.Sleep(4000);
             //motorSerialPort.WriteLine("/01 stream 1 setup disable");
             
@@ -68,7 +80,7 @@ namespace ScribeDriver
 
             //motorSerialPort.WriteLine("/01 stream 1 setup live 2 1");
             motorSerialPort.WriteLine("/01 stream 1 line rel " + y + " " + x);
-            Thread.Sleep(2000);
+            Thread.Sleep(300);
 
         }
 
@@ -80,15 +92,59 @@ namespace ScribeDriver
             return microsteps;
         }
 
-        public void scribeIn()
+        public void scribeIn(double inch)
         {
-            motorSerialPort.WriteLine("/02 move abs 128660");
-            Thread.Sleep(1500);
-            motorSerialPort.WriteLine("/02  move abs 33280");
+            int steps = inchesToMicroSteps(inch);
+            Thread.Sleep(500);
+            motorSerialPort.WriteLine("/02 move abs " + steps);
             Thread.Sleep(1500);
             
+            
+            
+        }
+        public void scribeOut()
+        {
+            Thread.Sleep(500);
+            motorSerialPort.WriteLine("/02  move abs 73280");
+            Thread.Sleep(1500);
         }
 
+        public void done()
+        {
+            motorSerialPort.WriteLine("/02 move min");
+            Thread.Sleep(1750);
+            motorSerialPort.WriteLine("/01 stream 1 line abs 0 0 ");
+            Thread.Sleep(1750);
+        }
+
+
+        string findZaberConnection()
+        {
+            string name = null;
+
+            using (var searcher = new ManagementObjectSearcher
+                ("SELECT * FROM WIN32_SerialPort"))
+            {
+                string[] portnames = SerialPort.GetPortNames();
+                var ports = searcher.Get().Cast<ManagementBaseObject>().ToList();
+                var tList = (from n in portnames
+                             join p in ports on n equals p["DeviceID"].ToString()
+                             select n + " - " + p["Caption"]).ToList();
+
+                foreach (string s in tList)
+                {
+                    if (s.Contains("A-Series USB"))
+                    {
+                        name = s.Substring(0, 4);
+                    }
+                }
+
+
+
+
+                return name;
+            }
+        }
 
     }
 }

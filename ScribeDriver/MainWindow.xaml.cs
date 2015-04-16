@@ -31,14 +31,14 @@ namespace ScribeDriver
         String lockPassword;
 
         LayoutProfile profile;
-        scribingProcessManager scribeManager;
+        scribingProcessManager scribeManager = new scribingProcessManager();
         incrementalCounter counter;
 
         int startingValue;
         int startingLocation;
         int maxLocation;
 
-        motorManager motor = new motorManager("COM4");
+        
     
 
         BackgroundWorker scribeProcess;
@@ -49,10 +49,12 @@ namespace ScribeDriver
             InitializeComponent();
             profile = new LayoutProfile();
             profile.defaultSettings();
-  
 
-
-            profileDisplay.Text = profile.dataString;
+            maxLocation = profile.hCount * profile.vCount;
+            TotalTextBox.Text = maxLocation.ToString();
+            CurrentTextBox.Text = "1";
+            startingValueInput.Text = "000";
+           
             locked = false;
             lockPassword = "690E2695B6AA8F08DC1FD736072E5819";
 
@@ -99,8 +101,8 @@ namespace ScribeDriver
 
             if (!locked)
             {
-                dataDisplay.Visibility = Visibility.Collapsed;
-                templateButton.Visibility = Visibility.Collapsed;
+                
+                startinValueLabel.Visibility = Visibility.Collapsed;
                 dataGrid.Visibility = Visibility.Collapsed;
                 scribeButton.Visibility = Visibility.Collapsed;
                 startingValueInput.Visibility = Visibility.Collapsed;
@@ -134,8 +136,8 @@ namespace ScribeDriver
                 if (sOutput.ToString() == lockPassword)
                 {
                     //change back and unlock
-                    dataDisplay.Visibility = Visibility.Visible;
-                    templateButton.Visibility = Visibility.Visible;
+               
+                    startinValueLabel.Visibility = Visibility.Visible;
                     dataGrid.Visibility = Visibility.Visible;
                     scribeButton.Visibility = Visibility.Visible;
                     startingValueInput.Visibility = Visibility.Visible;
@@ -178,23 +180,35 @@ namespace ScribeDriver
 
             int min = 0;
             int max = 3;
-
+            int tempInt;
 
             string errorString = "";
+            
 
-
+            if (int.TryParse(CurrentTextBox.Text, NumberStyles.Integer, new CultureInfo("en-US"),  out tempInt) && tempInt < 1 && tempInt > maxLocation)
+            {
+                errorString += "Please indicate a progress point between the minimum (0) and the maximum (" + maxLocation +")";
+                isGood = false;
+            }
 
 
             if ( !OnlyHexInString(starting) || (starting.Length > max) || (starting.Length < min) )
             {
-                errorString += "The Starting Value field contains an improperly formated number. Please enter a valid 3 digit hexadaceimal number (000 - FFF) \n";
+                errorString += " The Starting Value field contains an improperly formated number. Please enter a valid 3 digit hexadaceimal number (000 - FFF) \n";
 
                 isGood = false;
             }
+
+
+
             Debug.WriteLine(starting.Length);
 
             if(!isGood){
                 MessageBox.Show(errorString);
+            }
+            else
+            {
+                startingLocation = tempInt;   
             }
             return isGood;
         }
@@ -205,24 +219,32 @@ namespace ScribeDriver
         private void bw_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
+
             
 
-            counter.seedCounter(startingValue);
+            counter.seedCounter(startingValue +(startingLocation  -1));
+            
 
-            for (int i = 0; i < 81 && !worker.CancellationPending; i++)
+            for (int i = (startingLocation-1); i < maxLocation && !worker.CancellationPending; i++)
             {
                 worker.ReportProgress(i+1);
                 Debug.Write(counter.getValueAsHexString());
                // Debug.WriteLine(string.Format("X: {0}, Y:{1}", xDistance(i), yDistance(i)));
-                motor.linearMove(xDistance(i), yDistance(i,0));
-                Thread.Sleep(750);
+
+                scribeManager.setPlunge(plunge(i));
+                scribeManager.chipAndDigitSet(xDistance(i), yDistance(i, 0));
+                Thread.Sleep(400);
+                scribeManager.scribe(counter.getValueAsHexString()[0]);
                 Debug.Write("---" + counter.getValueAsHexString()[0]);
 
-                motor.linearMove(xDistance(i), yDistance(i, 1));
-                Thread.Sleep(750);
+                scribeManager.chipAndDigitSet(xDistance(i), yDistance(i, 1));
+                Thread.Sleep(400);
+                scribeManager.scribe(counter.getValueAsHexString()[1]);
                 Debug.Write("---" + counter.getValueAsHexString()[1]);
 
-                motor.linearMove(xDistance(i), yDistance(i, 2));
+                scribeManager.chipAndDigitSet(xDistance(i), yDistance(i, 2));
+                Thread.Sleep(400);
+                scribeManager.scribe(counter.getValueAsHexString()[2]);
                 Debug.WriteLine("---" + counter.getValueAsHexString()[2]);
                 
                 Thread.Sleep(1000);
@@ -250,17 +272,23 @@ namespace ScribeDriver
             }
             scribeButton.Content = "Scribe";
             MessageBox.Show("Done!");
+            scribeManager.finish();
         }
 
         double yDistance(int ChipNumber, int digit){
             int chipInRow = (ChipNumber % 9) ;
-          
-                return 5.312 - ( ((chipInRow) * (profile.hSpacing + profile.chipWidth)) + (digit * (0.01 + .04) )  );
+
+            return profile.yStarts[ChipNumber] - (digit * (0.05));
             
         }
         double xDistance(int ChipNumber){
-            int chipInColumn= (ChipNumber / 9);
-            return 5.412 - ((chipInColumn ) * (profile.vSpacing + profile.chipLength));
+            
+            return profile.xStarts[ChipNumber];
+        }
+
+        double plunge(int chipNumber)
+        {
+            return profile.plunge[chipNumber];
         }
        
         
