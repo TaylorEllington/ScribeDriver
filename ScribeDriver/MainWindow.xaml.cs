@@ -21,26 +21,26 @@ using System.Globalization;
 
 namespace ScribeDriver
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+  
     public partial class MainWindow : Window
     {
-
+        //control variables
         bool locked;
         String lockPassword;
 
+        //functional classes
         LayoutProfile profile;
         scribingProcessManager scribeManager = new scribingProcessManager();
         incrementalCounter counter;
-
+        
+        //scribing job details
         int startingValue;
         int startingLocation;
         int maxLocation;
 
         
     
-
+        //async  thread for scribing
         BackgroundWorker scribeProcess;
 
         public MainWindow()
@@ -229,7 +229,7 @@ namespace ScribeDriver
             {
                 worker.ReportProgress(i+1);
                 Debug.Write(counter.getValueAsHexString());
-               // Debug.WriteLine(string.Format("X: {0}, Y:{1}", xDistance(i), yDistance(i)));
+               
 
                 scribeManager.setPlunge(plunge(i));
                 scribeManager.chipAndDigitSet(xDistance(i), yDistance(i, 0));

@@ -25,7 +25,7 @@ namespace ScribeDriver
         public double[] plunge { get; set; }
 
         void buildDataString(){
-
+            //for debugging only
             string data;
             data = "Profile Name: " + profileName +"\n";
             data += "vertical Chip Count: " + vCount +"\n";
@@ -37,17 +37,8 @@ namespace ScribeDriver
             data += "Package Width: " + chipWidth +"\n";
             data += "Package Length: " + chipLength ;
             dataString = data; 
-
-            
-
             }
 
-        
-
-       
-
-
-        //for debuging only
         public void defaultSettings()
         {
             profileName = "Default Profile";
@@ -116,11 +107,6 @@ namespace ScribeDriver
 				1.8125    ,
 				1.8  
             };
-
-            
-            buildDataString();
-
-
         }
     }
 }

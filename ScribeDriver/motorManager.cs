@@ -40,7 +40,6 @@ namespace ScribeDriver
             microStepsPerStep = 64;
 
             //initalize motors
-           // motorSerialPort.WriteLine("/move min");
             motorSerialPort.WriteLine("/set resolution " + microStepsPerStep);
             Xpos = 0;
             Ypos = 0;
@@ -52,13 +51,13 @@ namespace ScribeDriver
             
            
 
-            //motorSerialPort.WriteLine("/01 move min");
+            //Calibrate motor and prepare for scribig
             motorSerialPort.WriteLine("/home");
             Thread.Sleep(4000);
             motorSerialPort.WriteLine("/01 stream 1 setup live 2 1");
             motorSerialPort.WriteLine("/01 stream 1 line abs " + x+ " "+ y);
             Thread.Sleep(4000);
-            //motorSerialPort.WriteLine("/01 stream 1 setup disable");
+            
             
         }
 
@@ -67,10 +66,10 @@ namespace ScribeDriver
             int x = inchesToMicroSteps(inchesY);
             int y = inchesToMicroSteps(inchesX);
 
-            //motorSerialPort.WriteLine("/01 stream 1 setup live 2 1");
+            
             motorSerialPort.WriteLine("/01 stream 1 line abs " + y + " " + x);
             Thread.Sleep(2000);
-            //motorSerialPort.WriteLine("/01 stream 1 setup disable");
+            
         }
 
         public void relLinearMove(double inchesX, double inchesY)
@@ -78,16 +77,14 @@ namespace ScribeDriver
             int x = inchesToMicroSteps(inchesY);
             int y = inchesToMicroSteps(inchesX);
 
-            //motorSerialPort.WriteLine("/01 stream 1 setup live 2 1");
+ 
             motorSerialPort.WriteLine("/01 stream 1 line rel " + y + " " + x);
             Thread.Sleep(300);
 
         }
 
         int inchesToMicroSteps(double inch)
-        {
-            
-            
+        {            
             int microsteps = (int) (inch * 51200);
             return microsteps;
         }
@@ -97,11 +94,9 @@ namespace ScribeDriver
             int steps = inchesToMicroSteps(inch);
             Thread.Sleep(500);
             motorSerialPort.WriteLine("/02 move abs " + steps);
-            Thread.Sleep(1500);
-            
-            
-            
+            Thread.Sleep(1500);       
         }
+
         public void scribeOut()
         {
             Thread.Sleep(500);
@@ -138,10 +133,6 @@ namespace ScribeDriver
                         name = s.Substring(0, 4);
                     }
                 }
-
-
-
-
                 return name;
             }
         }
